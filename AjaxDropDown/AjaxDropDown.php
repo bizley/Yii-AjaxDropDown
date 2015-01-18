@@ -604,7 +604,7 @@ class AjaxDropDown extends CWidget
      */
     protected function htmlOptionsInput()
     {
-        return $this->htmlOptionsSet('input', $this->bootstrap);
+        return $this->htmlOptionsSet('input', $this->bootstrap, array('id' => false));
     }
 
     /**
@@ -920,7 +920,7 @@ class AjaxDropDown extends CWidget
             echo CHtml::activeHiddenField($this->model, $this->attribute . $arrayMode, array('value' => $data['id'], 'id' => false));
         }
         else {
-            echo CHtml::hiddenField($this->name . $arrayMode, $data['id']);
+            echo CHtml::hiddenField($this->name . $arrayMode, $data['id'], array('id' => false));
         }
         echo CHtml::closeTag('li');
         echo $this->renderNewLine();
