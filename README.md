@@ -17,7 +17,7 @@ All the examples here are using Bootstrap 3.3.1.<br><br>
 _Default view:_<br>
 <img src="images/basic.jpg" alt="Default view">
 
-_Dropdown list visible:_<br>
+_Dropdown list visible: (option 'dropup' is available as well)_<br>
 <img src="images/dropdown.jpg" alt="Dropdown list visible">
 
 _Extra button:_<br>
