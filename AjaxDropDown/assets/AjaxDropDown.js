@@ -227,13 +227,14 @@
                 if (settings.removeClass !== '') selected += ' ' + settings.removeClass;
                 selected += '"';
                 if (settings.removeStyle !== '') selected += ' style="' + settings.removeStyle + '"';
-                selected += '>' + settings.removeLabel + '</a>' + label + '<input type="hidden" name="' + settings.name + arrayMode + '" value="' + id + '" /></li>';
+                selected += ' data-id="' + id + '">' + settings.removeLabel + '</a>' + label + '<input type="hidden" name="' + settings.name + arrayMode + '" value="' + id + '" /></li>';
 
                 results.append(selected);
             }
         });
         this.on('click', '.ajaxDropDownRemove', function(e){
             e.preventDefault();
+            $(this).parent().parent().parent().find('.ajaxDropDownRecord' + $(this).data('id')).removeClass(settings.activeClass);
             $(this).parent().remove();
         });
         return this;
