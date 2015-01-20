@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.0
+ * @version 1.01
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
@@ -622,9 +622,9 @@ class AjaxDropDown extends CWidget
      * Sets removing preselected value link HTML options.
      * @return array
      */
-    protected function htmlOptionsRemove()
+    protected function htmlOptionsRemove($id)
     {
-        return $this->htmlOptionsSet('remove', true);
+        return $this->htmlOptionsSet('remove', true, array('data-id' => $id));
     }
 
     /**
@@ -909,7 +909,7 @@ class AjaxDropDown extends CWidget
 
         echo $this->renderTab(2);
         echo CHtml::openTag('li', $this->htmlOptionsResult($data['id']));
-        echo CHtml::link($removeLabel, '#', $this->htmlOptionsRemove());
+        echo CHtml::link($removeLabel, '#', $this->htmlOptionsRemove($data['id']));
         if ($data['mark']) {
             echo $this->prepareOption('markBegin');
         }
