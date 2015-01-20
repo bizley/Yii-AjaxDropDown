@@ -8,6 +8,7 @@
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
  * data source.
  * @see https://github.com/bizley-code/Yii-AjaxDropDown
+ * @see http://www.yiiframework.com/extension/ajaxdropdown
  * 
  * See README file for configuration and usage examples.
  * 
