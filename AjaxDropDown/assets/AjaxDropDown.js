@@ -102,6 +102,7 @@
                                 for (i in results.data) {
                                     var result = '<li class="ajaxDropDownPages ajaxDropDownPage' + results.page + ' ajaxDropDownRecord'+ results.data[i].id;
                                     if (settings.recordClass !== '') result += ' ' + settings.recordClass;
+                                    if (ul.parent().parent().parent().find('.ajaxDropDownSelected' + results.data[i].id).length) result += ' ' + settings.activeClass;
                                     result += '"';
                                     if (settings.recordStyle !== '') result += ' style="' + settings.recordStyle + '"';
                                     result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
@@ -165,6 +166,7 @@
                             for (i in results.data) {
                                 var result = '<li class="ajaxDropDownPages ajaxDropDownPage' + results.page + ' ajaxDropDownRecord'+ results.data[i].id;
                                 if (settings.recordClass !== '') result += ' ' + settings.recordClass;
+                                if (ul.parent().parent().parent().find('.ajaxDropDownSelected' + results.data[i].id).length) result += ' ' + settings.activeClass;
                                 result += '"';
                                 if (settings.recordStyle !== '') result += ' style="' + settings.recordStyle + '"';
                                 result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
