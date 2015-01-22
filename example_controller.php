@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.0
+ * @version 1.0.2
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown form controller example
@@ -33,11 +33,11 @@ class FormController extends Controller
                 foreach ($model->names as $name) {
                     $tmp = CModel2::model()->findByPk((int)$name);
                     if ($tmp) {
-                        $dropDownData[] = [
+                        $dropDownData[] = array(
                             'id'    => $tmp->id,
                             'mark'  => $tmp->type == 'special' ? 1 : 0,
                             'value' => CHtml::encode($tmp->name),
-                        ];
+                        );
                     }
                 }
             }
