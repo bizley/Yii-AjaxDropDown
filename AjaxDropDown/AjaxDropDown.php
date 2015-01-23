@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.0.3
+ * @version 1.0.4
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
@@ -944,7 +944,9 @@ class AjaxDropDown extends CWidget
         if (is_array($this->data)) {
 
             if ($this->singleMode) {
-                $this->renderResult($active, $this->data[0], $this->singleMode);
+                if (isset($this->data[0])) {
+                    $this->renderResult($active, $this->data[0], $this->singleMode);
+                }
             }
             else {
                 foreach ($this->data as $data) {
