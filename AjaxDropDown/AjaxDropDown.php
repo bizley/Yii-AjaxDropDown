@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.0.2
+ * @version 1.0.3
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
@@ -220,6 +220,13 @@ class AjaxDropDown extends CWidget
      */
     public $markEnd;
 
+    /**
+     * @var boolean Wheter to use minified version of js asset file, default 
+     * true.
+     * @since 1.0.3
+     */
+    public $minified = true;
+    
     /**
      * @var integer Number of characters in the input text field required to 
      * send AJAX query, default 0.
@@ -727,7 +734,7 @@ class AjaxDropDown extends CWidget
         $assets           = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets';
         $this->assetsPath = Yii::app()->getAssetManager()->publish($assets, false, 0, $this->debug);
 
-        Yii::app()->getClientScript()->registerScriptFile($this->assetsPath . '/' . 'AjaxDropDown.js');
+        Yii::app()->getClientScript()->registerScriptFile($this->assetsPath . '/' . 'AjaxDropDown' . ($this->minified ? '.min' : '') . '.js');
         Yii::app()->clientScript->registerCoreScript('jquery');
 
         if (empty($this->translateCategory) || !is_string($this->translateCategory)) {
