@@ -78,7 +78,7 @@ This is just a basic widget configuration. You can find all the options describe
             <li class="ajaxDropDownSelected[SELECTED_ID] {resultClass}" {style="{resultStyle}"}>
                 <a class="ajaxDropDownRemove {removeClass}" {style="{removeStyle}"} href="#" data-id="[SELECTED_ID]">
                     {removeLabel}
-                </a>{markBegin}[SELECTED_VALUE]{markEnd}<input type="hidden" value="[SELECTED_ID]" name="[ATTRIBUTE_NAME]">
+                </a>{additionalCode}{markBegin}[SELECTED_VALUE]{markEnd}<input type="hidden" value="[SELECTED_ID]" name="[ATTRIBUTE_NAME]">
             </li>
         </ul>
     </div>

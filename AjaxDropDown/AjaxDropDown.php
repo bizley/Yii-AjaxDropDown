@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.0.4
+ * @version 1.1
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
@@ -27,7 +27,17 @@ class AjaxDropDown extends CWidget
      * Bootstrap default is 'active'.
      */
     public $activeClass;
-
+    
+    /**
+     * @var string Additional HTML code for the selected value row, default ''.
+     * Any 'additional' key in 'data' parameter element will replace this.
+     * You can use {VALUE} and {ID} tags here to be automatically replaced with 
+     * selected id and value of the row.
+     * @since 1.1
+     * @see $data
+     */
+    public $additionalCode;
+    
     /**
      * @var string The attribute associated with this widget.
      * The square brackets ('[]') are added automatically to collect tabular 
@@ -81,6 +91,10 @@ class AjaxDropDown extends CWidget
      * If empty 'id' is set to uniqid().
      * If not 0 and not 1 'mark' is set to 0.
      * If empty 'value' is set to 'error: missing value key in data array'.
+     * Since 1.1 there is the optional parameter 'additional' with HTML code to 
+     * be inserted in the selected row. If given this replaces 
+     * 'additionalCode' for that row only. In case you want to remove the 
+     * 'additionalCode' only for that row set the 'additional' key to false.
      */
     public $data;
 
@@ -478,6 +492,8 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var array Default English widget texts.
+     * {NUM} tag will be automatically replaced with 'minQuery' value for the 
+     * 'minimumCharacters' key.
      */
     protected $defaultLocal = array(
         'allRecords'        => 'All records',
@@ -896,6 +912,11 @@ class AjaxDropDown extends CWidget
         if (empty($data['value']) || !is_string($data['value'])) {
             $data['value'] = 'error: missing value key in data array';
         }
+        if (isset($data['additional']) && $data['additional'] !== false) {
+            if (empty($data['additional']) || !is_string($data['additional'])) {
+                $data['additional'] = '';
+            }
+        }
 
         if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
             $removeLabel = $this->removeLabel;
@@ -917,6 +938,12 @@ class AjaxDropDown extends CWidget
         echo $this->renderTab(2);
         echo CHtml::openTag('li', $this->htmlOptionsResult($data['id']));
         echo CHtml::link($removeLabel, '#', $this->htmlOptionsRemove($data['id']));
+        if ($data['additional'] !== false && !empty($data['additional'])) {
+            echo str_replace('{ID}', $data['id'], str_replace('{VALUE}', $data['value'], $data['additional']));
+        }
+        elseif (!empty($this->additionalCode)) {
+            echo str_replace('{ID}', $data['id'], str_replace('{VALUE}', $data['value'], $this->additionalCode));
+        }
         if ($data['mark']) {
             echo $this->prepareOption('markBegin');
         }

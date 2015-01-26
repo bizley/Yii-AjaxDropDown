@@ -1,7 +1,14 @@
+/*!
+ * AjaxDropDown v1.1
+ * Paweł Bizley Brzozowski
+ * https://github.com/bizley-code/Yii-AjaxDropDown
+ * http://www.yiiframework.com/extension/ajaxdropdown
+ */
 (function ($) {
     $.fn.ajaxDropDown = function (options) {
         var settings = $.extend(true, {
             activeClass: 'active',
+            additionalCode: '',
             disabledClass: 'disabled',
             errorClass: '',
             errorStyle: '',
@@ -229,7 +236,7 @@
                 if (settings.removeClass !== '') selected += ' ' + settings.removeClass;
                 selected += '"';
                 if (settings.removeStyle !== '') selected += ' style="' + settings.removeStyle + '"';
-                selected += ' data-id="' + id + '">' + settings.removeLabel + '</a>' + label + '<input type="hidden" name="' + settings.name + arrayMode + '" value="' + id + '" /></li>';
+                selected += ' data-id="' + id + '">' + settings.removeLabel + '</a>' + settings.additionalCode + label + '<input type="hidden" name="' + settings.name + arrayMode + '" value="' + id + '" /></li>';
 
                 results.append(selected);
             }

@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.0
+ * @version 1.1
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown data source example
