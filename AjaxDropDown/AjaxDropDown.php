@@ -918,6 +918,9 @@ class AjaxDropDown extends CWidget
                 $data['additional'] = '';
             }
         }
+        else {
+            $data['additional'] = '';
+        }
 
         if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
             $removeLabel = $this->removeLabel;
