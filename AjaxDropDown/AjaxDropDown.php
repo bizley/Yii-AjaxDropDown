@@ -36,7 +36,7 @@ class AjaxDropDown extends CWidget
      * @since 1.1
      * @see $data
      */
-    public $additionalCode;
+    public $additionalCode = '';
     
     /**
      * @var string The attribute associated with this widget.
