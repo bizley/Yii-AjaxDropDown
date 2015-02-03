@@ -1,96 +1,96 @@
 /*!
- * AjaxDropDown v1.1
+ * AjaxDropDown v1.1.1
  * Paweł Bizley Brzozowski
  * https://github.com/bizley-code/Yii-AjaxDropDown
  * http://www.yiiframework.com/extension/ajaxdropdown
  */
 (function ($) {
     $.fn.ajaxDropDown = function (options) {
-        var settings = $.extend(true, {
-            activeClass: 'active',
-            additionalCode: '',
-            disabledClass: 'disabled',
-            errorClass: '',
-            errorStyle: '',
-            headerClass: '',
-            headerStyle: '',
-            hiddenClass: 'hidden',
-            loadingClass: '',
-            loadingStyle: '',
-            markBegin: '',
-            markEnd: '',
-            minQuery: 0,
+        var set = $.extend(true, {
+            accl: 'active',
+            addc: '',
+            dicl: 'disabled',
+            ercl: '',
+            erst: '',
+            hecl: '',
+            hest: '',
+            hicl: 'hidden',
+            locl: '',
+            lost: '',
+            mabe: '',
+            maen: '',
+            minq: 0,
             name: 'ajaxDropDown',
-            nextBegin: '',
-            nextClass: '',
-            nextEnd: '',
-            nextStyle: '',
-            noRecordsClass: '',
-            noRecordsStyle: '',
-            pagerBegin: '',
-            pagerEnd: '',
-            previousBegin: '',
-            previousClass: '',
-            previousEnd: '',
-            previousStyle: '',
-            progressBar: '',
-            recordClass: '',
-            recordStyle: '',
-            removeClass: '',
-            removeLabel: '',
-            removeStyle: '',
-            resultClass: '',
-            resultStyle: '',
-            singleMode: false,
-            switchClass: '',
-            switchStyle: '',
-            triggerEvent: '',
+            nebe: '',
+            necl: '',
+            neen: '',
+            nest: '',
+            nrcl: '',
+            nrst: '',
+            pabe: '',
+            paen: '',
+            prbe: '',
+            prcl: '',
+            pren: '',
+            prst: '',
+            prba: '',
+            recl: '',
+            rest: '',
+            rmcl: '',
+            rmla: '',
+            rmst: '',
+            rscl: '',
+            rsst: '',
+            smod: false,
+            swcl: '',
+            swst: '',
+            trig: '',
             url: '',
-            local: {
-                allRecords: 'All records',
-                recordsContaining: 'Records containing',
-                minimumCharacters: 'Type at least {NUM} character(s) to filter the results...',
-                error: 'Error',
-                previous: 'previous',
+            loca: {
+                allr: 'All records',
+                rcon: 'Records containing',
+                mcha: 'Type at least {NUM} character(s) to filter the results...',
+                erro: 'Error',
+                prev: 'prev',
                 next: 'next',
-                noRecords: 'No matching records found'
+                nrec: 'No matching records found'
             }
         }, options);
-        var ul = this.find('.ajaxDropDownMenu');
-        var progressBar = '<li class="ajaxDropDownLoading';
-        if (settings.loadingClass !== '') progressBar += ' ' + settings.loadingClass;
-        progressBar += '"';
-        if (settings.loadingStyle !== '') progressBar += ' style="' + settings.loadingStyle + '"';
-        progressBar += '>' + settings.progressBar + '</li>';
+        var ul = this.find('ul.ajaxDropDownMenu');
+        var prba = '<li class="ajaxDropDownLoading';
+        if (set.locl !== '') prba += ' ' + set.locl;
+        prba += '"';
+        if (set.lost !== '') prba += ' style="' + set.lost + '"';
+        prba += '>' + set.prba + '</li>';
         var headerStart = '<li class="dropdown-header';
-        if (settings.headerClass !== '') headerStart += ' ' + settings.headerClass;
+        if (set.hecl !== '') headerStart += ' ' + set.hecl;
         headerStart += '"';
-        if (settings.headerStyle !== '') headerStart += ' style="' + settings.headerStyle + '"';
+        if (set.hest !== '') headerStart += ' style="' + set.hest + '"';
         headerStart += '>';
-        var headerMinimumCharacters = settings.local.minimumCharacters.replace(/{NUM}/g, settings.minQuery);
-        var error = '<li class="dropdown-header';
-        if (settings.errorClass !== '') error += ' ' + settings.errorClass;
-        error += '"';
-        if (settings.errorStyle !== '') error += ' style="' + settings.errorStyle + '"';
-        error += '>' + settings.local.error + '</li>';
-        var noRecords = '<li class="dropdown-header';
-        if (settings.noRecordsClass !== '') noRecords += ' ' + settings.noRecordsClass;
-        noRecords += '"';
-        if (settings.noRecordsStyle !== '') noRecords += ' style="' + settings.noRecordsStyle + '"';
-        noRecords += '>' + settings.local.noRecords + '</li>';
-        this.on(settings.triggerEvent, function(){
-            if (ul.find('.ajaxDropDownPages').length === 0) {
-                var page = $(this).find('.ajaxDropDownToggle').data('page');
+        var headerMinimumCharacters = set.loca.mcha.replace(/{NUM}/g, set.minq);
+        var erro = '<li class="dropdown-header';
+        if (set.ercl !== '') erro += ' ' + set.ercl;
+        erro += '"';
+        if (set.erst !== '') erro += ' style="' + set.erst + '"';
+        erro += '>' + set.loca.erro + '</li>';
+        var nrec = '<li class="dropdown-header';
+        if (set.nrcl !== '') nrec += ' ' + set.nrcl;
+        nrec += '"';
+        if (set.nrst !== '') nrec += ' style="' + set.nrst + '"';
+        nrec += '>' + set.loca.nrec + '</li>';
+        this.on(set.trig, function(){
+            if (ul.find('li.ajaxDropDownPages').length === 0) {
+                var page = $(this).find('button.ajaxDropDownToggle').data('page');
                 page = page * 1;
                 var search = false;
-                var header = headerStart + settings.pagerBegin + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
-                header += settings.pagerEnd + settings.local.allRecords + '</li><li class="divider"></li>' + progressBar;
+                var header = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
+                header += set.paen + set.loca.allr + '</li><li class="divider"></li>' + prba;
                 var query = $(this).find('input[type=text]').val();
-                if (settings.minQuery > 0) {
-                    if (query.length >= settings.minQuery) {
-                        header = headerStart + settings.pagerBegin + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
-                        header += settings.pagerEnd + settings.local.recordsContaining + ' <strong>' + query;
-                        header += '</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li><li class="divider"></li>' + progressBar;
+                if (set.minq > 0) {
+                    if (query.length >= set.minq) {
+                        header = headerStart + set.pabe + '<span class="ajaxDropDownPageNumber">' + page + '</span>/<span class="ajaxDropDownTotalPages">1</span>';
+                        header += set.paen + set.loca.rcon + ' <strong>' + query;
+                        header += '</strong></li><li class="divider"></li>' + prba;
                         search = true;
                     }
                     else header = headerStart + headerMinimumCharacters + '</li>';
@@ -98,152 +98,152 @@
                 else search = true;
                 ul.html(header);
                 if (search) {
-                    $.post(settings.url, {query:query, page:page}).
-                        fail(function(){ul.append(error);}).
+                    $.post(set.url, {query:query, page:page}).
+                        fail(function(){ul.append(erro);}).
                         done(function(data){
                             var results = $.parseJSON(data);
                             if (results.total === undefined) results.total = 1;
                             if (results.page === undefined) results.page = 1;
                             if (results.data.length) {
-                                ul.find('.ajaxDropDownTotalPages').text(results.total);
+                                ul.find('span.ajaxDropDownTotalPages').text(results.total);
                                 for (i in results.data) {
                                     var result = '<li class="ajaxDropDownPages ajaxDropDownPage' + results.page + ' ajaxDropDownRecord'+ results.data[i].id;
-                                    if (settings.recordClass !== '') result += ' ' + settings.recordClass;
-                                    if (ul.parent().parent().parent().find('.ajaxDropDownSelected' + results.data[i].id).length) result += ' ' + settings.activeClass;
+                                    if (set.recl !== '') result += ' ' + set.recl;
+                                    if (ul.parent().parent().parent().find('li.ajaxDropDownSelected' + results.data[i].id).length) result += ' ' + set.accl;
                                     result += '"';
-                                    if (settings.recordStyle !== '') result += ' style="' + settings.recordStyle + '"';
+                                    if (set.rest !== '') result += ' style="' + set.rest + '"';
                                     result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
-                                    if (results.data[i].mark) result += settings.markBegin;
+                                    if (results.data[i].mark) result += set.mabe;
                                     result += results.data[i].value;
-                                    if (results.data[i].mark) result += settings.markEnd;
+                                    if (results.data[i].mark) result += set.maen;
                                     result += '</a></li>';
                                     ul.append(result);
                                 }
                                 if (results.total > 1) {
                                     var pages = '<li class="divider ajaxDropDownInfo"></li><li class="ajaxDropDownInfo';
-                                    if (settings.switchClass !== '') pages += ' ' + settings.switchClass;
+                                    if (set.swcl !== '') pages += ' ' + set.swcl;
                                     pages += '"';
-                                    if (settings.switchStyle !== '') pages += ' style="' + settings.switchStyle + '"';
+                                    if (set.swst !== '') pages += ' style="' + set.swst + '"';
                                     pages += '><a href="#" class="ajaxDropDownPrev';
-                                    if (settings.previousClass !== '') pages += ' ' + settings.previousClass;
+                                    if (set.prcl !== '') pages += ' ' + set.prcl;
                                     if (results.page === 1) {
-                                        pages += ' ' + settings.disabledClass;
+                                        pages += ' ' + set.dicl;
                                     }
                                     pages += '"';
-                                    if (settings.previousStyle !== '') pages += ' style="' + settings.previousStyle + '"';
-                                    pages += '>' + settings.previousBegin + settings.local.previous + settings.previousEnd + '</a><a href="#" class="ajaxDropDownNext';
-                                    if (settings.nextClass !== '') pages += ' ' + settings.nextClass;
+                                    if (set.prst !== '') pages += ' style="' + set.prst + '"';
+                                    pages += '>' + set.prbe + set.loca.prev + set.pren + '</a><a href="#" class="ajaxDropDownNext';
+                                    if (set.necl !== '') pages += ' ' + set.necl;
                                     if (results.page === results.total) {
-                                       pages += ' ' + settings.disabledClass;
+                                       pages += ' ' + set.dicl;
                                     }
                                     pages += '"';
-                                    if (settings.nextStyle !== '') pages += ' style="' + settings.nextStyle + '"';
-                                    pages += '>' + settings.nextBegin + settings.local.next + settings.nextEnd + '</a></li>';
+                                    if (set.nest !== '') pages += ' style="' + set.nest + '"';
+                                    pages += '>' + set.nebe + set.loca.next + set.neen + '</a></li>';
                                     ul.append(pages);
                                 }
                             }
-                            else ul.append(noRecords);
+                            else ul.append(nrec);
                         }).
-                        always(function(){$('.ajaxDropDownLoading').remove();});
+                        always(function(){$('li.ajaxDropDownLoading').remove();});
                 }
             }
         });
-        this.on('click', '.ajaxDropDownNext', function(e){
+        this.on('click', 'a.ajaxDropDownNext', function(e){
             e.preventDefault();
             e.stopPropagation();
-            ul.find('.ajaxDropDownPrev').removeClass(settings.disabledClass);
-            ul.find('.ajaxDropDownNext').addClass(settings.disabledClass);
-            var page = ul.parent().find('.ajaxDropDownToggle').data('page');
+            ul.find('a.ajaxDropDownPrev').removeClass(set.dicl);
+            ul.find('a.ajaxDropDownNext').addClass(set.dicl);
+            var page = ul.parent().find('button.ajaxDropDownToggle').data('page');
             page = page * 1 + 1;
-            if (ul.find('.ajaxDropDownPage' + page).length) {
-                ul.find('.ajaxDropDownPages').addClass(settings.hiddenClass);
-                ul.find('.ajaxDropDownPage' + page).removeClass(settings.hiddenClass);
-                ul.find('.ajaxDropDownNext').removeClass(settings.disabledClass);
+            if (ul.find('li.ajaxDropDownPage' + page).length) {
+                ul.find('li.ajaxDropDownPages').addClass(set.hicl);
+                ul.find('li.ajaxDropDownPage' + page).removeClass(set.hicl);
+                ul.find('a.ajaxDropDownNext').removeClass(set.dicl);
             }
             else {
                 var query = ul.parent().parent().find('input[type=text]').val();
-                $.post(settings.url, {query:query, page:page}).
-                    fail(function(){ul.append(error);}).
+                $.post(set.url, {query:query, page:page}).
+                    fail(function(){ul.append(erro);}).
                     done(function(data){
                         var results = $.parseJSON(data);
                         if (results.data.length) {
-                            ul.find('.ajaxDropDownPages').addClass(settings.hiddenClass);
+                            ul.find('.ajaxDropDownPages').addClass(set.hicl);
                             if (results.total === undefined) results.total = 1;
                             if (results.page === undefined) results.page = 1;
                             for (i in results.data) {
                                 var result = '<li class="ajaxDropDownPages ajaxDropDownPage' + results.page + ' ajaxDropDownRecord'+ results.data[i].id;
-                                if (settings.recordClass !== '') result += ' ' + settings.recordClass;
-                                if (ul.parent().parent().parent().find('.ajaxDropDownSelected' + results.data[i].id).length) result += ' ' + settings.activeClass;
+                                if (set.recl !== '') result += ' ' + set.recl;
+                                if (ul.parent().parent().parent().find('li.ajaxDropDownSelected' + results.data[i].id).length) result += ' ' + set.accl;
                                 result += '"';
-                                if (settings.recordStyle !== '') result += ' style="' + settings.recordStyle + '"';
+                                if (set.rest !== '') result += ' style="' + set.rest + '"';
                                 result += '><a href="#" class="ajaxDropDownResult" data-id="'+ results.data[i].id +'">';
-                                if (results.data[i].mark) result += settings.markBegin;
+                                if (results.data[i].mark) result += set.mabe;
                                 result += results.data[i].value;
-                                if (results.data[i].mark) result += settings.markEnd;
+                                if (results.data[i].mark) result += set.maen;
                                 result += '</a></li>';
                                 ul.find('.divider.ajaxDropDownInfo').before(result);
                             }
-                            if (results.page < results.total) ul.find('.ajaxDropDownNext').removeClass(settings.disabledClass);
+                            if (results.page < results.total) ul.find('a.ajaxDropDownNext').removeClass(set.dicl);
                             else page = results.total;
                         }
-                        else ul.append(noRecords);
+                        else ul.append(nrec);
                     });
             }
-            ul.parent().find('.ajaxDropDownToggle').data('page', page);
-            ul.find('.ajaxDropDownPageNumber').text(page);
+            ul.parent().find('button.ajaxDropDownToggle').data('page', page);
+            ul.find('span.ajaxDropDownPageNumber').text(page);
         });
-        this.on('click', '.ajaxDropDownPrev', function(e){
+        this.on('click', 'a.ajaxDropDownPrev', function(e){
             e.preventDefault();
             e.stopPropagation();
-            ul.find('.ajaxDropDownNext').removeClass(settings.disabledClass);
-            ul.find('.ajaxDropDownPrev').addClass(settings.disabledClass);
-            var page = ul.parent().find('.ajaxDropDownToggle').data('page');
+            ul.find('a.ajaxDropDownNext').removeClass(set.dicl);
+            ul.find('a.ajaxDropDownPrev').addClass(set.dicl);
+            var page = ul.parent().find('button.ajaxDropDownToggle').data('page');
             page = page * 1 - 1;
             if (page < 1) page = 1;
-            ul.find('.ajaxDropDownPages').addClass(settings.hiddenClass);
-            ul.find('.ajaxDropDownPage' + page).removeClass(settings.hiddenClass);
-            if (page > 1) ul.find('.ajaxDropDownPrev').removeClass(settings.disabledClass);
-            ul.parent().find('.ajaxDropDownToggle').data('page', page);
-            ul.find('.ajaxDropDownPageNumber').text(page);
+            ul.find('li.ajaxDropDownPages').addClass(set.hicl);
+            ul.find('li.ajaxDropDownPage' + page).removeClass(set.hicl);
+            if (page > 1) ul.find('a.ajaxDropDownPrev').removeClass(set.dicl);
+            ul.parent().find('button.ajaxDropDownToggle').data('page', page);
+            ul.find('span.ajaxDropDownPageNumber').text(page);
         });
         this.on('keyup', 'input[type=text]', function(){
-            $(this).parent().find('.ajaxDropDownToggle').data('page', 1);
-            $(this).parent().find('.ajaxDropDownMenu').find('.ajaxDropDownPages').remove();
+            $(this).parent().find('button.ajaxDropDownToggle').data('page', 1);
+            $(this).parent().find('ul.ajaxDropDownMenu').find('li.ajaxDropDownPages').remove();
         });
-        this.on('click', '.ajaxDropDownResult', function(e){
+        this.on('click', 'a.ajaxDropDownResult', function(e){
             e.preventDefault();
             var id = $(this).data('id');
             var label = $(this).html();
-            var results = $(this).parent().parent().parent().parent().parent().find('.ajaxDropDownResults');
+            var results = $(this).parent().parent().parent().parent().parent().find('ul.ajaxDropDownResults');
             var arrayMode = '[]';
-            if (settings.singleMode) {
+            if (set.smod) {
                 results.html('');
-                $(this).parent().parent().find('.ajaxDropDownPages').removeClass(settings.activeClass);
+                $(this).parent().parent().find('li.ajaxDropDownPages').removeClass(set.accl);
                 arrayMode = '';
             }
-            if ($(this).parent().hasClass(settings.activeClass)) {
-                $(this).parent().removeClass(settings.activeClass);
-                results.find('.ajaxDropDownSelected' + id).remove();
+            if ($(this).parent().hasClass(set.accl)) {
+                $(this).parent().removeClass(set.accl);
+                results.find('li.ajaxDropDownSelected' + id).remove();
             }
             else {
-                $(this).parent().addClass(settings.activeClass);
-                if (settings.singleMode) arrayMode = '';
+                $(this).parent().addClass(set.accl);
+                if (set.smod) arrayMode = '';
                 var selected = '<li class="ajaxDropDownSelected' + id;
-                if (settings.resultClass !== '') selected += ' ' + settings.resultClass;
+                if (set.rscl !== '') selected += ' ' + set.rscl;
                 selected += '"';
-                if (settings.resultStyle !== '') selected += ' style="' + settings.resultStyle + '"';
+                if (set.rsst !== '') selected += ' style="' + set.rsst + '"';
                 selected += '><a href="#" class="ajaxDropDownRemove';
-                if (settings.removeClass !== '') selected += ' ' + settings.removeClass;
+                if (set.rmcl !== '') selected += ' ' + set.rmcl;
                 selected += '"';
-                if (settings.removeStyle !== '') selected += ' style="' + settings.removeStyle + '"';
-                selected += ' data-id="' + id + '">' + settings.removeLabel + '</a>' + settings.additionalCode + label + '<input type="hidden" name="' + settings.name + arrayMode + '" value="' + id + '" /></li>';
+                if (set.rmst !== '') selected += ' style="' + set.rmst + '"';
+                selected += ' data-id="' + id + '">' + set.rmla + '</a>' + set.addc + label + '<input type="hidden" name="' + set.name + arrayMode + '" value="' + id + '" /></li>';
 
                 results.append(selected);
             }
         });
-        this.on('click', '.ajaxDropDownRemove', function(e){
+        this.on('click', 'a.ajaxDropDownRemove', function(e){
             e.preventDefault();
-            $(this).parent().parent().parent().find('.ajaxDropDownRecord' + $(this).data('id')).removeClass(settings.activeClass);
+            $(this).parent().parent().parent().find('li.ajaxDropDownRecord' + $(this).data('id')).removeClass(set.accl);
             $(this).parent().remove();
         });
         return this;
