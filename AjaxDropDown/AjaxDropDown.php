@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.1
+ * @version 1.1.1
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
@@ -27,7 +27,7 @@ class AjaxDropDown extends CWidget
      * Bootstrap default is 'active'.
      */
     public $activeClass;
-    
+
     /**
      * @var string Additional HTML code for the selected value row, default ''.
      * Any 'additional' key in 'data' parameter element will replace this.
@@ -37,7 +37,7 @@ class AjaxDropDown extends CWidget
      * @see $data
      */
     public $additionalCode = '';
-    
+
     /**
      * @var string The attribute associated with this widget.
      * The square brackets ('[]') are added automatically to collect tabular 
@@ -240,7 +240,7 @@ class AjaxDropDown extends CWidget
      * @since 1.0.3
      */
     public $minified = true;
-    
+
     /**
      * @var integer Number of characters in the input text field required to 
      * send AJAX query, default 0.
@@ -397,6 +397,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var string Additional CSS style of the dropdown menu with AJAX records.
+     * Bootstrap sets to 'min-width:250px'.
      */
     public $resultsStyle;
 
@@ -434,7 +435,6 @@ class AjaxDropDown extends CWidget
     /**
      * @var string Additional CSS style of the result value element holding the 
      * 'next' and 'previous' links.
-     * Bootstrap sets to 'min-width:230px'.
      */
     public $switchStyle;
 
@@ -485,8 +485,8 @@ class AjaxDropDown extends CWidget
         'removeLabel'   => '<span class="glyphicon glyphicon-remove"></span>',
         'resultClass'   => ' list-group-item',
         'resultsClass'  => ' dropdown-menu',
+        'resultsStyle'  => 'min-width:250px',
         'selectedClass' => ' list-group',
-        'switchStyle'   => 'min-width:230px',
         'triggerEvent'  => 'show.bs.dropdown',
     );
 
@@ -793,7 +793,26 @@ class AjaxDropDown extends CWidget
             }
         }
 
-        return $local;
+        $shortlocal = array();
+        $shortNames = array(
+            'allRecords'        => 'allr',
+            'error'             => 'erro',
+            'minimumCharacters' => 'mcha',
+            'next'              => 'next',
+            'noRecords'         => 'nrec',
+            'previous'          => 'prev',
+            'recordsContaining' => 'rcon',
+        );
+        foreach ($local as $key => $value) {
+            if (isset($shortNames[$key])) {
+                $shortlocal[$shortNames[$key]] = $value;
+            }
+            else {
+                $shortlocal[$key] = $value;
+            }
+        }
+
+        return $shortlocal;
     }
 
     /**
@@ -831,46 +850,46 @@ class AjaxDropDown extends CWidget
     protected function prepareOptions($name)
     {
         return array(
-            'activeClass'    => $this->prepareOption('activeClass'),
-            'additionalCode' => $this->additionalCode,
-            'disabledClass'  => $this->prepareOption('disabledClass'),
-            'errorClass'     => $this->prepareOption('errorClass'),
-            'errorStyle'     => $this->prepareOption('errorStyle'),
-            'headerClass'    => $this->prepareOption('headerClass'),
-            'headerStyle'    => $this->prepareOption('headerStyle'),
-            'hiddenClass'    => $this->prepareOption('hiddenClass'),
-            'loadingClass'   => $this->prepareOption('loadingClass'),
-            'loadingStyle'   => $this->prepareOption('loadingStyle'),
-            'local'          => $this->prepareOptionLocal(),
-            'markBegin'      => $this->prepareOption('markBegin'),
-            'markEnd'        => $this->prepareOption('markEnd'),
-            'minQuery'       => $this->prepareOptionMinQuery(),
-            'name'           => $name,
-            'nextBegin'      => $this->prepareOption('nextBegin'),
-            'nextClass'      => $this->prepareOption('nextClass'),
-            'nextEnd'        => $this->prepareOption('nextEnd'),
-            'nextStyle'      => $this->prepareOption('nextStyle'),
-            'noRecordsClass' => $this->prepareOption('noRecordsClass'),
-            'noRecordsStyle' => $this->prepareOption('noRecordsStyle'),
-            'pagerBegin'     => $this->prepareOption('pagerBegin'),
-            'pagerEnd'       => $this->prepareOption('pagerEnd'),
-            'previousBegin'  => $this->prepareOption('previousBegin'),
-            'previousClass'  => $this->prepareOption('previousClass'),
-            'previousEnd'    => $this->prepareOption('previousEnd'),
-            'previousStyle'  => $this->prepareOption('previousStyle'),
-            'progressBar'    => $this->prepareOptionProgressBar(),
-            'recordClass'    => $this->prepareOption('recordClass'),
-            'recordStyle'    => $this->prepareOption('recordStyle'),
-            'removeClass'    => $this->prepareOption('removeClass'),
-            'removeLabel'    => $this->prepareOption('removeLabel'),
-            'removeStyle'    => $this->prepareOption('removeStyle'),
-            'resultClass'    => $this->prepareOption('resultClass'),
-            'resultStyle'    => $this->prepareOption('resultStyle'),
-            'singleMode'     => $this->singleMode,
-            'switchClass'    => $this->prepareOption('switchClass'),
-            'switchStyle'    => $this->prepareOption('switchStyle'),
-            'triggerEvent'   => $this->prepareOption('triggerEvent'),
-            'url'            => $this->prepareOptionUrl(),
+            'accl' => $this->prepareOption('activeClass'),
+            'addc' => $this->additionalCode,
+            'dicl' => $this->prepareOption('disabledClass'),
+            'ercl' => $this->prepareOption('errorClass'),
+            'erst' => $this->prepareOption('errorStyle'),
+            'hecl' => $this->prepareOption('headerClass'),
+            'hest' => $this->prepareOption('headerStyle'),
+            'hicl' => $this->prepareOption('hiddenClass'),
+            'loca' => $this->prepareOptionLocal(),
+            'locl' => $this->prepareOption('loadingClass'),
+            'lost' => $this->prepareOption('loadingStyle'),
+            'mabe' => $this->prepareOption('markBegin'),
+            'maen' => $this->prepareOption('markEnd'),
+            'minq' => $this->prepareOptionMinQuery(),
+            'name' => $name,
+            'nebe' => $this->prepareOption('nextBegin'),
+            'necl' => $this->prepareOption('nextClass'),
+            'neen' => $this->prepareOption('nextEnd'),
+            'nest' => $this->prepareOption('nextStyle'),
+            'nrcl' => $this->prepareOption('noRecordsClass'),
+            'nrst' => $this->prepareOption('noRecordsStyle'),
+            'pabe' => $this->prepareOption('pagerBegin'),
+            'paen' => $this->prepareOption('pagerEnd'),
+            'prbe' => $this->prepareOption('previousBegin'),
+            'prcl' => $this->prepareOption('previousClass'),
+            'pren' => $this->prepareOption('previousEnd'),
+            'prst' => $this->prepareOption('previousStyle'),
+            'prba' => $this->prepareOptionProgressBar(),
+            'recl' => $this->prepareOption('recordClass'),
+            'rest' => $this->prepareOption('recordStyle'),
+            'rmcl' => $this->prepareOption('removeClass'),
+            'rmla' => $this->prepareOption('removeLabel'),
+            'rmst' => $this->prepareOption('removeStyle'),
+            'rscl' => $this->prepareOption('resultClass'),
+            'rsst' => $this->prepareOption('resultStyle'),
+            'smod' => $this->singleMode,
+            'swcl' => $this->prepareOption('switchClass'),
+            'swst' => $this->prepareOption('switchStyle'),
+            'trig' => $this->prepareOption('triggerEvent'),
+            'url'  => $this->prepareOptionUrl(),
         );
     }
 
@@ -1107,4 +1126,5 @@ class AjaxDropDown extends CWidget
         $options = CJavaScript::encode($this->prepareOptions($name));
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').ajaxDropDown($options);");
     }
+
 }
