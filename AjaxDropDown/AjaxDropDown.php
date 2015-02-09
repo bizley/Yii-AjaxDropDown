@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.1.1
+ * @version 1.1.2
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
@@ -18,6 +18,9 @@
  * 
  * AjaxDropDown uses Bootstrap and JQuery as default.
  * @see http://getbootstrap.com
+ * 
+ * For Yii2 version of this widget
+ * @see https://github.com/bizley-code/Yii2-AjaxDropDown
  */
 class AjaxDropDown extends CWidget
 {
@@ -30,18 +33,18 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var string Additional HTML code for the selected value row, default ''.
-     * Any 'additional' key in 'data' parameter element will replace this.
-     * You can use {VALUE} and {ID} tags here to be automatically replaced with 
-     * selected id and value of the row.
+     * Any 'additional' key in [[data]] parameter element will replace this.
+     * Any {VALUE} and {ID} tags here are automatically replaced with selected 
+     * id and value of the row.
      * @since 1.1
-     * @see $data
+     * @see [[data]]
      */
     public $additionalCode = '';
 
     /**
      * @var string The attribute associated with this widget.
      * The square brackets ('[]') are added automatically to collect tabular 
-     * data input when singleMode parameter is set to false (default).
+     * data input when [[singleMode]] parameter is set to false (default).
      */
     public $attribute;
 
@@ -93,15 +96,15 @@ class AjaxDropDown extends CWidget
      * If empty 'value' is set to 'error: missing value key in data array'.
      * Since 1.1 there is the optional parameter 'additional' with HTML code to 
      * be inserted in the selected row. If given this replaces 
-     * 'additionalCode' for that row only. In case you want to remove the 
-     * 'additionalCode' only for that row set the 'additional' key to false.
+     * [[additionalCode]] for that row only. In case you want to remove the 
+     * [[additionalCode]] only for that row set the 'additional' key to false.
      */
     public $data;
 
     /**
      * @var boolean Wheter to copy the asset file even if it has been already 
      * published before, default false.
-     * @see $forceCopy in CAssetManager::publish
+     * @see CAssetManager::publish()
      */
     public $debug = false;
 
@@ -134,7 +137,7 @@ class AjaxDropDown extends CWidget
     /**
      * @var array HTML options of the extra button between input text field and 
      * triggering button, default array().
-     * @see $htmlOptions in CHtml::htmlButton
+     * @see CHtml::htmlButton()
      */
     public $extraButtonHtmlOptions = array();
 
@@ -175,12 +178,6 @@ class AjaxDropDown extends CWidget
     public $hiddenClass;
 
     /**
-     * @var array HTML parameters of the widget. This is used currently to keep 
-     * 'id' and 'name' parameters and generally shoud not be changed.
-     */
-    public $htmlOptions;
-
-    /**
      * @var string CSS class of the input text field.
      * Bootstrap adds 'form-control'.
      */
@@ -205,7 +202,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var array Array of translated strings used in widgets, default array().
-     * @see $defaultLocal List of all default English strings.
+     * @see [[defaultLocal]]
      */
     public $local = array();
 
@@ -280,7 +277,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var string Additional CSS style of the 'next' link on the results list.
-     * Bootstrap sets to 'clear:none'.
+     * Bootstrap sets to 'clear:none;'.
      */
     public $nextStyle;
 
@@ -334,7 +331,7 @@ class AjaxDropDown extends CWidget
     /**
      * @var string Additional CSS style of the 'previous' link on the results 
      * list.
-     * Bootstrap sets to 'clear:none'.
+     * Bootstrap sets to 'clear:none;'.
      */
     public $previousStyle;
 
@@ -342,6 +339,7 @@ class AjaxDropDown extends CWidget
      * @var string HTML string of the loading results indicator, default ''.
      * Bootstrap sets to 
      * '<div class="progress" style="width:90%;margin:0 auto"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:100%">{LOADING}</div></div>'.
+     * {LOADING} tag used here is replaced with translated 'Loading' string.
      */
     public $progressBar;
 
@@ -397,7 +395,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var string Additional CSS style of the dropdown menu with AJAX records.
-     * Bootstrap sets to 'min-width:250px'.
+     * Bootstrap sets to 'min-width:250px;'.
      */
     public $resultsStyle;
 
@@ -422,7 +420,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var mixed URL of the AJAX source of records. It can be string or array.
-     * @see CHtml::normalizeUrl
+     * @see CHtml::normalizeUrl()
      */
     public $source;
 
@@ -439,10 +437,10 @@ class AjaxDropDown extends CWidget
     public $switchStyle;
 
     /**
-     * @var string Name of the translate category, default 'AjaxDropDown'.
-     * @see YiiBase::t
+     * @var string Name of the translate category, default 'app'.
+     * @see Yii::t()
      */
-    public $translateCategory;
+    public $translateCategory = 'app';
 
     /**
      * @var string Event name to trigger/display the dropdown list.
@@ -473,27 +471,27 @@ class AjaxDropDown extends CWidget
         'nextBegin'     => '<small>',
         'nextClass'     => 'pull-right btn',
         'nextEnd'       => ' <span class="glyphicon glyphicon-chevron-right"></span></small>',
-        'nextStyle'     => 'clear:none',
+        'nextStyle'     => 'clear:none;',
         'pagerBegin'    => '<span class="badge pull-right">',
         'pagerEnd'      => '</span>',
         'previousBegin' => '<small><span class="glyphicon glyphicon-chevron-left"></span> ',
         'previousClass' => 'pull-left btn',
         'previousEnd'   => '</small>',
-        'previousStyle' => 'clear:none',
+        'previousStyle' => 'clear:none;',
         'progressBar'   => '<div class="progress" style="width:90%;margin:0 auto"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:100%">{LOADING}</div></div>',
         'removeClass'   => ' text-danger pull-right',
         'removeLabel'   => '<span class="glyphicon glyphicon-remove"></span>',
         'resultClass'   => ' list-group-item',
         'resultsClass'  => ' dropdown-menu',
-        'resultsStyle'  => 'min-width:250px',
+        'resultsStyle'  => 'min-width:250px;',
         'selectedClass' => ' list-group',
         'triggerEvent'  => 'show.bs.dropdown',
     );
 
     /**
      * @var array Default English widget texts.
-     * {NUM} tag will be automatically replaced with 'minQuery' value for the 
-     * 'minimumCharacters' key.
+     * {NUM} tag is automatically replaced with value of [[minQuery]] in the 
+     * 'minimumCharacters' element.
      */
     protected $defaultLocal = array(
         'allRecords'        => 'All records',
@@ -752,10 +750,6 @@ class AjaxDropDown extends CWidget
 
         Yii::app()->getClientScript()->registerScriptFile($this->assetsPath . '/' . 'AjaxDropDown' . ($this->minified ? '.min' : '') . '.js');
         Yii::app()->clientScript->registerCoreScript('jquery');
-
-        if (empty($this->translateCategory) || !is_string($this->translateCategory)) {
-            $this->translateCategory = 'AjaxDropDown';
-        }
     }
 
     /**
@@ -832,7 +826,7 @@ class AjaxDropDown extends CWidget
     {
         $progressBar = '';
         if (!empty($this->progressBar) && is_string($this->progressBar)) {
-            $progressBar = $this->progressBar;
+            $progressBar = strtr($this->progressBar, array('{LOADING}' => Yii::t($this->translateCategory, 'Loading')));
         }
         else {
             if ($this->bootstrap) {
@@ -1068,36 +1062,24 @@ class AjaxDropDown extends CWidget
      * Resolves name and ID of the input. Source property of the name and/or 
      * source property of the attribute could be customized by specifying first 
      * and/or second parameter accordingly.
-     * @param string $nameProperty class property name which holds element name 
-     * to be used. This parameter is available since 1.1.14.
-     * @param string $attributeProperty class property name which holds model 
-     * attribute name to be used. This parameter is available since 1.1.14.
      * @return array name and ID of the input: array('name','id').
      * @throws CException in case model and attribute property or name property 
      * cannot be resolved.
      */
-    protected function resolveNameID($nameProperty = 'name', $attributeProperty = 'attribute')
+    protected function resolveNameID()
     {
-        if ($this->$nameProperty !== null) {
-            $name = $this->$nameProperty;
-        }
-        elseif (isset($this->htmlOptions[$nameProperty])) {
-            $name = $this->htmlOptions[$nameProperty];
+        if ($this->name !== null) {
+            $name = $this->name;
         }
         elseif ($this->hasModel()) {
-            $name = CHtml::activeName($this->model, $this->$attributeProperty);
+            $name = CHtml::activeName($this->model, $this->attribute);
         }
         else {
             throw new CException(Yii::t('zii', '{class} must specify "model" and "{attribute}" or "{name}" property values.', array('{class}' => get_class($this), '{attribute}' => $attributeProperty, '{name}' => $nameProperty)));
         }
 
         if (($id = $this->getId(false)) === null) {
-            if (isset($this->htmlOptions['id'])) {
-                $id = $this->htmlOptions['id'];
-            }
-            else {
-                $id = CHtml::getIdByName($name);
-            }
+            $id = CHtml::getIdByName($name);
         }
 
         return array($name, $id);
@@ -1109,16 +1091,6 @@ class AjaxDropDown extends CWidget
     public function run()
     {
         list($name, $id) = $this->resolveNameID();
-
-        if (isset($this->htmlOptions['id'])) {
-            $id = $this->htmlOptions['id'];
-        }
-        else {
-            $this->htmlOptions['id'] = $id;
-        }
-        if (isset($this->htmlOptions['name'])) {
-            $name = $this->htmlOptions['name'];
-        }
 
         $id .= '_' . (!empty($this->defaults['mainClass']) ? $this->defaults['mainClass'] : '');
         $this->renderWidget($id);
