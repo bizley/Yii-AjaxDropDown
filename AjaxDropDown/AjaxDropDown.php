@@ -199,6 +199,8 @@ class AjaxDropDown extends CWidget
     /**
      * @var boolean Wheter pressing the key in filter field should trigger the 
      * dropdown list to open, default true.
+     * This option works as intended only for [[bootstrap]] parameter set to 
+     * true.
      * @since 1.2
      */
     public $keyTrigger = true;
