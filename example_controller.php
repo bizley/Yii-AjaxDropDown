@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.1
+ * @version 1.2
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown form controller example
@@ -19,11 +19,12 @@
  */
 class FormController extends Controller
 {
+
     public function actionAdd()
     {
-        $model = new CModel();
+        $model        = new CModel();
         $dropDownData = array();
-        $data = Yii::app()->request->getPost('CModel');
+        $data         = Yii::app()->request->getPost('CModel');
 
         if ($data) {
 
@@ -31,7 +32,7 @@ class FormController extends Controller
 
             if (count($model->names)) {
                 foreach ($model->names as $name) {
-                    $tmp = CModel2::model()->findByPk((int)$name);
+                    $tmp = CModel2::model()->findByPk((int) $name);
                     if ($tmp) {
                         $dropDownData[] = array(
                             'id'    => $tmp->id,
@@ -49,11 +50,11 @@ class FormController extends Controller
                     if (count($model->names)) {
                         foreach ($model->names as $name) {
                             if (is_numeric($name)) {
-                                $oldName = CModel2::model()->findByAttributes(array('model_id' => $model->id, 'name_id' => (int)$name));
+                                $oldName = CModel2::model()->findByAttributes(array('model_id' => $model->id, 'name_id' => (int) $name));
                                 if (!$oldName) {
                                     $model2           = new Cmodel2;
                                     $model2->model_id = $model->id;
-                                    $model2->name_id  = (int)$name;
+                                    $model2->name_id  = (int) $name;
                                     $model2->save();
                                 }
                             }
@@ -63,9 +64,10 @@ class FormController extends Controller
             }
         }
 
-        $this->render('add', array(
-            'model' => $model, 
-            'dropDownData' => $dropDownData
+        return $this->render('add', array(
+                    'model'        => $model,
+                    'dropDownData' => $dropDownData
         ));
     }
+
 }

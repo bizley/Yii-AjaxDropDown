@@ -44,10 +44,14 @@ This is just a basic widget configuration. You can find all the options describe
     <div id="[WIDGET_ID]" class="ajaxDropDownWidget {mainClass}" {style="{mainStyle}"}>
         <div class="ajaxDropDown {groupClass}" {style="{groupStyle}"}>
             <input type="text" name="ajaxDropDownInput" value="" class="{inputClass}" {style="{inputStyle}"}>
+            <input type="hidden" value="[SELECTED_ID]" name="[ATTRIBUTE_NAME]" class="singleResult">
             <div class="{buttonsClass}" {style="{buttonsStyle}"}>
                 {<button type="button" {extraButtonHtmlOptions}>{extraButtonLabel}</button>}
                 <button data-page="[DATA_PAGE]" data-toggle="dropdown" type="button" class="ajaxDropDownToggle {buttonClass}" {style="{buttonStyle}"}>
                     {buttonLabel}
+                </button>
+                <button type="button" class="ajaxDropDownSingleRemove {removeSingleClass}" {style="{removeSingleStyle}"}>
+                    {removeSingleLabel}
                 </button>
                 <ul role="menu" class="ajaxDropDownMenu {resultsClass}" {style="{resultsStyle}"}>
                     <li class="dropdown-header {headerClass}" {style="{headerStyle}"}>
@@ -127,3 +131,20 @@ In case you want to display some records as already selected or simply just want
 This time the array shouldn't be encoded. Keep this structure even in case of single result.
 
 You can find the form controller example in example_controller.php.
+
+## Available extra options
+
+**Drop up**<br>
+Set _'dropup' => true_ to trigger dropdown menu above to button.
+
+**Additional button**<br>
+Set _'extraButtonLabel'_ and/or _'extraButtonOptions'_ to add extra button between input text field and dropdown trigger button.
+
+**Additional code**<br>
+Set _'additionalCode'_ if you want to add an extra code between link removing the selected result and selected result label. You can use {ID} and {VALUE} tags to get these automatically replaced with selected data. You can replace this general option for only one row by setting _'additional'_ array element in _'data'_ parameter.
+
+**Single mode**<br>
+Set _'singleMode'_ to true if you want only one result to be selectable at once. This option renders selected result inside the filter field - if you want it to be displayed underneath the field set _'singleModeBottom'_ to true.
+
+**Callbacks**<br>
+Pass any JavaScript function as a string to _'onSelect'_ and _'onRemove'_ parameters to call them when selecting or removing the results from the list. In first case available variables are _id_ (ID of the result), _label_ (its label) and _selection_ (list of all selected results). In second case only _id_ and _selection_ are available.

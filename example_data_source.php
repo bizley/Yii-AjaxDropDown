@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.1
+ * @version 1.2
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown data source example
@@ -19,16 +19,17 @@
  */
 class ExampleDataSourceController extends Controller
 {
+
     public function actionData()
     {
         $results = array(
-            'data' => array(),
-            'page' => 1,
+            'data'  => array(),
+            'page'  => 1,
             'total' => 0
         );
         $query   = Yii::app()->request->getPost('query');
         $page    = Yii::app()->request->getPost('page');
-        
+
         $currentPage = 0;
         if (!empty($page) && is_numeric($page) && $page > 0) {
             $currentPage = $page - 1;
@@ -45,7 +46,7 @@ class ExampleDataSourceController extends Controller
         }
         else {
             $query = CHtml::encode(strip_tags($query));
-            
+
             $dataProvider = new CActiveDataProvider('CModel', array(
                 'criteria'   => array(
                     'condition' => 'name LIKE :name AND status = 1',
@@ -72,4 +73,5 @@ class ExampleDataSourceController extends Controller
         echo CJSON::encode($results);
         Yii::app()->end();
     }
+
 }
