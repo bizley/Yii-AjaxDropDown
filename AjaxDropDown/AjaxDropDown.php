@@ -267,7 +267,7 @@ class AjaxDropDown extends CWidget
     public $model;
 
     /**
-     * @var string Widget name. This must be set if $model is not set.
+     * @var string Widget name. This must be set if [[model]] is not set.
      */
     public $name;
 
@@ -722,6 +722,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * Sets removing preselected value link HTML options.
+     * @param string $id ID of the widget
      * @return array
      */
     protected function htmlOptionsRemove($id)
@@ -878,7 +879,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * Sets boolean JS option for chosen element.
-     * @param mixed $name
+     * @param string $name
      * @return bool
      * @since 1.2
      */
@@ -944,7 +945,7 @@ class AjaxDropDown extends CWidget
      */
     protected function prepareOptionMinQuery()
     {
-        return is_numeric($this->minQuery) && $this->minQuery > 0 ? $this->minQuery : 0;
+        return is_numeric($this->minQuery) && $this->minQuery > 0 ? (int)$this->minQuery : 0;
     }
 
     /**
@@ -1253,7 +1254,7 @@ class AjaxDropDown extends CWidget
             $name = CHtml::activeName($this->model, $this->attribute);
         }
         else {
-            throw new CException(Yii::t('zii', '{class} must specify "model" and "{attribute}" or "{name}" property values.', array('{class}' => get_class($this), '{attribute}' => $attributeProperty, '{name}' => $nameProperty)));
+            throw new CException(Yii::t('zii', '{class} must specify "model" and "attribute" or "name" property values.', array('{class}' => get_class($this))));
         }
 
         if (($id = $this->getId(false)) === null) {
