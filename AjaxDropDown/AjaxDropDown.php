@@ -2,7 +2,7 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.2
+ * @version 1.2.1
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
@@ -19,7 +19,7 @@
  * AjaxDropDown uses Bootstrap and JQuery as default.
  * @see http://getbootstrap.com
  * 
- * For Yii2 version of this widget
+ * For Yii 2 version of this widget
  * @see https://github.com/bizley-code/Yii2-AjaxDropDown
  */
 class AjaxDropDown extends CWidget
@@ -190,6 +190,11 @@ class AjaxDropDown extends CWidget
      * Bootstrap adds 'form-control'.
      */
     public $inputClass;
+    
+    /**
+     * @var array HTML options for the input text field.
+     */
+    public $inputHtmlOptions;
 
     /**
      * @var string Additional CSS style of the input text field.
@@ -704,6 +709,9 @@ class AjaxDropDown extends CWidget
     protected function htmlOptionsInput($disabled = false)
     {
         $options = array('id' => false);
+        if (!empty($this->inputHtmlOptions) && is_array($this->inputHtmlOptions)) {
+            $options = $this->inputHtmlOptions;
+        }
         if ($disabled) {
             $options['disabled'] = true;
         }

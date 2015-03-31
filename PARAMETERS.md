@@ -94,6 +94,9 @@ Bootstrap default is 'hidden'.
 _string_ CSS class of the input text field.<br>
 Bootstrap adds 'form-control'.
 
+## inputHtmlOptions
+_array_ HTML options for the input text field.
+
 ## inputStyle
 _string_ Additional CSS style of the input text field.
 
