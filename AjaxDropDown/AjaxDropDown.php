@@ -2,25 +2,25 @@
 
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.2.1
+ * @version 1.3
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
  * data source.
- * @see https://github.com/bizley-code/Yii-AjaxDropDown
- * @see http://www.yiiframework.com/extension/ajaxdropdown
+ * https://github.com/bizley-code/Yii-AjaxDropDown
+ * http://www.yiiframework.com/extension/ajaxdropdown
  * 
  * See README file for configuration and usage examples.
  * 
  * AjaxDropDown requires Yii version 1.1.
- * @see http://www.yiiframework.com
- * @see https://github.com/yiisoft/yii
+ * http://www.yiiframework.com
+ * https://github.com/yiisoft/yii
  * 
  * AjaxDropDown uses Bootstrap and JQuery as default.
- * @see http://getbootstrap.com
+ * http://getbootstrap.com
  * 
- * For Yii 2 version of this widget
- * @see https://github.com/bizley-code/Yii2-AjaxDropDown
+ * For Yii 2 version of this widget see
+ * https://github.com/bizley-code/Yii2-AjaxDropDown
  */
 class AjaxDropDown extends CWidget
 {
@@ -185,6 +185,13 @@ class AjaxDropDown extends CWidget
      */
     public $hiddenClass;
 
+    /**
+     * @var boolean Wheter adding or removing results with JS should trigger 
+     * onRemove and onSelect callbacks, default true.
+     * @since 1.3
+     */
+    public $jsEventsCallback = true;
+    
     /**
      * @var string CSS class of the input text field.
      * Bootstrap adds 'form-control'.
@@ -598,9 +605,6 @@ class AjaxDropDown extends CWidget
         'selectedClass'     => 'ajaxDropDownResults',
     );
 
-    const ADD_NEW_LINE = "\n";
-    const ADD_TAB      = "\t";
-
     /**
      * Sets dropdown triggering button label.
      * @return string
@@ -694,8 +698,8 @@ class AjaxDropDown extends CWidget
         }
 
         $return = array(
-            'class' => $class ? : null,
-            'style' => $style ? : null,
+            'class' => $class ?: null,
+            'style' => $style ?: null,
         );
 
         return $return;
@@ -778,8 +782,8 @@ class AjaxDropDown extends CWidget
         }
 
         $return = array(
-            'class' => $class ? : null,
-            'style' => $style ? : null,
+            'class' => $class ?: null,
+            'style' => $style ?: null,
         );
 
         return $return;
@@ -832,8 +836,8 @@ class AjaxDropDown extends CWidget
         }
 
         $return = array(
-            'class' => $class ? : null,
-            'style' => $style ? : null,
+            'class' => $class ?: null,
+            'style' => $style ?: null,
         );
 
         if (count($additional)) {
@@ -861,7 +865,7 @@ class AjaxDropDown extends CWidget
         $assets           = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets';
         $this->assetsPath = Yii::app()->getAssetManager()->publish($assets, false, 0, $this->debug);
 
-        Yii::app()->getClientScript()->registerScriptFile($this->assetsPath . '/' . 'AjaxDropDown' . ($this->minified ? '.min' : '') . '.js');
+        Yii::app()->getClientScript()->registerScriptFile($this->assetsPath . '/' . 'AjaxDropdown' . ($this->minified ? '.min' : '') . '.js');
         Yii::app()->clientScript->registerCoreScript('jquery');
     }
 
@@ -991,6 +995,7 @@ class AjaxDropDown extends CWidget
             'hecl' => $this->prepareOption('headerClass'),
             'hest' => $this->prepareOption('headerStyle'),
             'hicl' => $this->prepareOption('hiddenClass'),
+            'jsev' => $this->prepareOptionBool('jsEventsCallback'),
             'keyt' => $this->prepareOptionBool('keyTrigger'),
             'loca' => $this->prepareOptionLocal(),
             'locl' => $this->prepareOption('loadingClass'),
@@ -1059,191 +1064,30 @@ class AjaxDropDown extends CWidget
     }
 
     /**
-     * Renders main part of the widget with filter field and buttons.
-     * @since 1.2
-     */
-    protected function renderMain()
-    {
-        $singleMode = false;
-        if ($this->singleMode && !$this->singleModeBottom && $this->additionalCode == '') {
-            if (is_array($this->data) && isset($this->data[0])) {
-                $singleMode = true;
-            }
-        }
-
-        echo $this->renderTab(2);
-        echo CHtml::textField(
-                !empty($this->defaults['inputName']) ? $this->defaults['inputName'] : '', $singleMode ? (!empty($this->data[0]['value']) ? str_replace('"', '', strip_tags($this->data[0]['value'])) : '') : '', $this->htmlOptionsInput($singleMode)
-        );
-        if ($singleMode) {
-            if (!empty($this->model)) {
-                echo CHtml::activeHiddenField($this->model, $this->attribute, array('value' => !empty($this->data[0]['id']) ? $this->data[0]['id'] : '', 'id' => false, 'class' => 'singleResult'));
-            }
-            else {
-                echo CHtml::hiddenField($this->name, !empty($this->data[0]['id']) ? $this->data[0]['id'] : '', array('id' => false, 'class' => 'singleResult'));
-            }
-        }
-        echo $this->renderNewLine();
-        echo $this->renderTab(2);
-        echo CHtml::openTag('div', $this->htmlOptionsButtons());
-        echo $this->renderNewLine();
-        if (!empty($this->extraButtonLabel) || !empty($this->extraButtonHtmlOptions)) {
-            echo $this->renderTab(3);
-            echo CHtml::htmlButton(is_string($this->extraButtonLabel) ? $this->extraButtonLabel : '', $this->htmlOptionsExtraButton());
-            echo $this->renderNewLine();
-        }
-        echo $this->renderTab(3);
-        echo CHtml::htmlButton($this->buttonLabel(), $this->htmlOptionsButton($singleMode));
-        echo CHtml::htmlButton($this->removeSingleLabel(), $this->htmlOptionsRemoveSingle($singleMode));
-        echo $this->renderNewLine();
-    }
-    
-    /**
-     * Renders new line characters.
-     * @param integer $copy Number of repeats, default 1
-     * @return string
-     */
-    protected function renderNewLine($copy = 1)
-    {
-        return str_repeat(self::ADD_NEW_LINE, $copy);
-    }
-
-    /**
-     * Renders single preselected value result.
-     * @param array $data Preselected value data array
-     * @param boolean $singleMode Wheter to render hidden output field as 
-     * single one or as part of tabular data collection
-     */
-    protected function renderResult($data = array(), $singleMode = false)
-    {
-        if (empty($data['id'])) {
-            $data['id'] = uniqid();
-        }
-        if (empty($data['mark']) || !in_array($data['mark'], array(0, 1))) {
-            $data['mark'] = 0;
-        }
-        if (empty($data['value']) || !is_string($data['value'])) {
-            $data['value'] = 'error: missing value key in data array';
-        }
-        if (isset($data['additional']) && $data['additional'] !== false) {
-            if (empty($data['additional']) || !is_string($data['additional'])) {
-                $data['additional'] = '';
-            }
-        }
-        else {
-            $data['additional'] = '';
-        }
-
-        if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
-            $removeLabel = $this->removeLabel;
-        }
-        else {
-            if ($this->bootstrap) {
-                $removeLabel = $this->bootstrapDefaults['removeLabel'];
-            }
-            else {
-                $removeLabel = !empty($this->defaults['removeLabel']) ? $this->defaults['removeLabel'] : '';
-            }
-        }
-
-        $arrayMode = '[]';
-        if ($singleMode) {
-            $arrayMode = '';
-        }
-
-        echo $this->renderTab(2);
-        echo CHtml::openTag('li', $this->htmlOptionsResult($data['id']));
-        echo CHtml::link($removeLabel, '#', $this->htmlOptionsRemove($data['id']));
-        if ($data['additional'] !== false && !empty($data['additional'])) {
-            echo str_replace('{ID}', $data['id'], str_replace('{VALUE}', $data['value'], $data['additional']));
-        }
-        elseif (!empty($this->additionalCode)) {
-            echo str_replace('{ID}', $data['id'], str_replace('{VALUE}', $data['value'], $this->additionalCode));
-        }
-        if ($data['mark']) {
-            echo $this->prepareOption('markBegin');
-        }
-        echo $data['value'];
-        if ($data['mark']) {
-            echo $this->prepareOption('markEnd');
-        }
-        if (!empty($this->model)) {
-            echo CHtml::activeHiddenField($this->model, $this->attribute . $arrayMode, array('value' => $data['id'], 'id' => false));
-        }
-        else {
-            echo CHtml::hiddenField($this->name . $arrayMode, $data['id'], array('id' => false));
-        }
-        echo CHtml::closeTag('li');
-        echo $this->renderNewLine();
-    }
-
-    /**
      * Renders the preselected data values.
      */
-    protected function renderResults()
+    protected function results()
     {
+        $results = array();
+        
         if (is_array($this->data)) {
-
             if ($this->singleMode) {
-                
                 if ($this->singleModeBottom) {
                     if (isset($this->data[0])) {
-                        $this->renderResult($this->data[0], $this->singleMode);
+                        return [$this->singleResult($this->data[0], $this->singleMode)];
                     }
                 }
             }
             else {
                 foreach ($this->data as $data) {
-                    $this->renderResult($data, $this->singleMode);
+                    $results[] = $this->singleResult($data, $this->singleMode);
                 }
             }
         }
+        
+        return $results;
     }
-
-    /**
-     * Renders tab characters.
-     * @param integer $copy Number of repeats, default 1
-     * @return string
-     */
-    protected function renderTab($copy = 1)
-    {
-        return str_repeat(self::ADD_TAB, $copy);
-    }
-
-    /**
-     * Renders the widget
-     * @param string $id ID of the widget
-     */
-    protected function renderWidget($id)
-    {
-        echo $this->renderNewLine();
-        echo CHtml::openTag('div', $this->htmlOptionsMain($id));
-        echo $this->renderNewLine();
-        echo $this->renderTab();
-        echo CHtml::openTag('div', $this->htmlOptionsGroup());
-        echo $this->renderNewLine();
-        $this->renderMain();
-        echo $this->renderTab(3);
-        echo CHtml::openTag('ul', $this->htmlOptionsResults());
-        echo CHtml::closeTag('ul');
-        echo $this->renderNewLine();
-        echo $this->renderTab(2);
-        echo CHtml::closeTag('div');
-        echo $this->renderNewLine();
-        echo $this->renderTab();
-        echo CHtml::closeTag('div');
-        echo $this->renderNewLine();
-        echo $this->renderTab();
-        echo CHtml::openTag('ul', $this->htmlOptionsSelected());
-        echo $this->renderNewLine();
-        $this->renderResults();
-        echo $this->renderTab();
-        echo CHtml::closeTag('ul');
-        echo $this->renderNewLine();
-        echo CHtml::closeTag('div');
-        echo $this->renderNewLine();
-    }
-
+    
     /**
      * This method is copied from CJuiInputWidget.
      * Resolves name and ID of the input. Source property of the name and/or 
@@ -1280,10 +1124,95 @@ class AjaxDropDown extends CWidget
         list($name, $id) = $this->resolveNameID();
 
         $id .= '_' . (!empty($this->defaults['mainClass']) ? $this->defaults['mainClass'] : '');
-        $this->renderWidget($id);
 
         $options = CJavaScript::encode($this->prepareOptions($name));
         Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').ajaxDropDown($options);");
+        
+        $singleMode = false;
+        if ($this->singleMode && !$this->singleModeBottom && $this->additionalCode == '') {
+            if (is_array($this->data) && isset($this->data[0])) {
+                $singleMode = true;
+            }
+        }
+        
+        return $this->render('field', [
+            'attribute'               => $this->attribute,
+            'buttonLabel'             => $this->buttonLabel(),
+            'data'                    => $this->data,
+            'defaults'                => $this->defaults,
+            'extraButtonLabel'        => $this->extraButtonLabel,
+            'extraButtonOptions'      => $this->extraButtonHtmlOptions,
+            'htmlOptionsButton'       => $this->htmlOptionsButton($singleMode),
+            'htmlOptionsButtons'      => $this->htmlOptionsButtons(),
+            'htmlOptionsExtraButton'  => $this->htmlOptionsExtraButton(),
+            'htmlOptionsGroup'        => $this->htmlOptionsGroup(),
+            'htmlOptionsInput'        => $this->htmlOptionsInput($singleMode),
+            'htmlOptionsMain'         => $this->htmlOptionsMain($id),
+            'htmlOptionsRemoveSingle' => $this->htmlOptionsRemoveSingle($singleMode),
+            'htmlOptionsResults'      => $this->htmlOptionsResults(),
+            'htmlOptionsSelected'     => $this->htmlOptionsSelected(),
+            'model'                   => $this->model,
+            'name'                    => $this->name,
+            'removeSingleLabel'       => $this->removeSingleLabel(),
+            'results'                 => $this->results(),
+            'singleMode'              => $singleMode,          
+        ]);
     }
 
+    /**
+     * Renders single preselected value result.
+     * @param array $data Preselected value data array
+     * @param boolean $singleMode Wheter to render hidden output field as 
+     * single one or as part of tabular data collection
+     */
+    protected function singleResult($data = array(), $singleMode = false)
+    {
+        $result = $data;
+        if (empty($result['id'])) {
+            $result['id'] = uniqid();
+        }
+        if (empty($result['mark']) || !in_array($result['mark'], array(0, 1))) {
+            $result['mark'] = 0;
+        }
+        if (empty($result['value']) || !is_string($result['value'])) {
+            $result['value'] = 'error: missing value key in data array';
+        }
+        if (isset($result['additional']) && $result['additional'] !== false) {
+            if (empty($result['additional']) || !is_string($result['additional'])) {
+                $result['additional'] = '';
+            }
+        }
+        else {
+            $result['additional'] = '';
+        }
+
+        if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
+            $result['removeLabel'] = $this->removeLabel;
+        }
+        else {
+            if ($this->bootstrap) {
+                $result['removeLabel'] = $this->bootstrapDefaults['removeLabel'];
+            }
+            else {
+                $result['removeLabel'] = !empty($this->defaults['removeLabel']) ? $this->defaults['removeLabel'] : '';
+            }
+        }
+
+        $result['arrayMode'] = '[]';
+        if ($singleMode) {
+            $result['arrayMode'] = '';
+        }
+
+        $result['htmlOptionsResult'] = $this->htmlOptionsResult($result['id']);
+        $result['htmlOptionsRemove'] = $this->htmlOptionsRemove($result['id']);
+        
+        $result['markBegin'] = $this->prepareOption('markBegin');
+        $result['markEnd']   = $this->prepareOption('markEnd');
+        
+        $result['model']     = $this->model;
+        $result['attribute'] = $this->attribute;
+        $result['name']      = $this->name;        
+        
+        return $result;
+    }
 }

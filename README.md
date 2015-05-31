@@ -115,7 +115,7 @@ TOTAL_PAGES_NUMBER is the number of all available pages.
 
 This should be JSON encoded. You can find the example in the example_data_source.php.
 
-## Preselected and post-validate data.
+## Preselected and post-validate data with PHP.
 
 In case you want to display some records as already selected or simply just want to keep the selected data after validation you need to prepare the 'data' parameter which is the array almost identical to the source one.
 
@@ -131,6 +131,31 @@ In case you want to display some records as already selected or simply just want
 This time the array shouldn't be encoded. Keep this structure even in case of single result.
 
 You can find the form controller example in example_controller.php.
+
+## Preselected and post-validate data with JavaScript.
+
+You can manipulate selected results by triggering the following events on AjaxDropDown object:
+
+**add**<br>
+Add one or more results. In case the _'singleMode'_ is true only the last added result will be displayed.
+
+    jQuery({id or class of AjaxDropDown field}).trigger('add', [result1, result2, ...]);
+
+With every result data being object with _id_, _value_, _mark_ and _additional_ properties (only _id_ is required):
+
+    {id:1, value:"xxx", mark:0, additional:"xxx"}
+
+**removeOne**<br>
+Remove one or more results.
+
+    jQuery({id or class of AjaxDropDown field}).trigger('removeOne', [id1, id2, ...]);
+
+**removeAll**<br>
+Remove all results.
+
+    jQuery({id or class of AjaxDropDown field}).trigger('removeAll');
+
+By default events (except 'removeAll') are calling callback methods _onRemove_ and _onSelect_. You can change it by setting _'jsEventsCallback'_ to false.
 
 ## Available extra options
 
