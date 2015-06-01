@@ -115,7 +115,7 @@ TOTAL_PAGES_NUMBER is the number of all available pages.
 
 This should be JSON encoded. You can find the example in the example_data_source.php.
 
-## Preselected and post-validate data with PHP.
+## Preselected and post-validate data with PHP
 
 In case you want to display some records as already selected or simply just want to keep the selected data after validation you need to prepare the 'data' parameter which is the array almost identical to the source one.
 
@@ -132,7 +132,7 @@ This time the array shouldn't be encoded. Keep this structure even in case of si
 
 You can find the form controller example in example_controller.php.
 
-## Preselected and post-validate data with JavaScript.
+## Preselected and post-validate data with JavaScript
 
 You can manipulate selected results by triggering the following events on AjaxDropDown object:
 
