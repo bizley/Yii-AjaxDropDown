@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.3
+ * @version 1.3.1
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  */
 ?>
@@ -46,7 +46,7 @@
     <?= CHtml::closeTag('div') . "\n"; ?>
     <?= CHtml::openTag('ul', $htmlOptionsSelected) . "\n"; ?>
 <?php foreach ($results as $result): ?>
-        <?php $this->render('result', $result); ?>
+        <?= $this->render('result', $result); ?>
 <?php endforeach; ?>
     <?= CHtml::closeTag('ul') . "\n"; ?>
 <?= CHtml::closeTag('div') . "\n"; ?>

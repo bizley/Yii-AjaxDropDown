@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.3
+ * @version 1.3.1
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  */
 ?>
