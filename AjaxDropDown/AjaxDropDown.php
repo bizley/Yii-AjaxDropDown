@@ -1,10 +1,6 @@
 <?php
 
 /**
- * @author Paweł Bizley Brzozowski
- * @version 1.3.1
- * @license http://www.gnu.org/licenses/gpl-2.0.html
- * 
  * AjaxDropDown is the Yii widget for rendering the dropdown menu with the AJAX 
  * data source.
  * https://github.com/bizley-code/Yii-AjaxDropDown
@@ -21,6 +17,10 @@
  * 
  * For Yii 2 version of this widget see
  * https://github.com/bizley-code/Yii2-AjaxDropDown
+ * 
+ * @author Paweł Bizley Brzozowski
+ * @version 1.3.2
+ * @license http://www.gnu.org/licenses/gpl-2.0.html
  */
 class AjaxDropDown extends CWidget
 {
@@ -33,23 +33,23 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var string Additional HTML code for the selected value row, default ''.
-     * Any 'additional' key in [[data]] parameter element will replace this.
+     * Any 'additional' key in $data parameter element will replace this.
      * Any {VALUE} and {ID} tags here are automatically replaced with selected 
      * id and value of the row.
      * @since 1.1
-     * @see [[data]]
+     * @see $data
      */
     public $additionalCode = '';
 
     /**
      * @var string The attribute associated with this widget.
      * The square brackets ('[]') are added automatically to collect tabular 
-     * data input when [[singleMode]] parameter is set to false (default).
+     * data input when $singleMode parameter is set to false (default).
      */
     public $attribute;
 
     /**
-     * @var boolean Wheter to add Bootstrap CSS classes, default true.
+     * @var boolean Whether to add Bootstrap CSS classes, default true.
      */
     public $bootstrap = true;
 
@@ -95,14 +95,14 @@ class AjaxDropDown extends CWidget
      * If not 0 and not 1 'mark' is set to 0.
      * If empty 'value' is set to 'error: missing value key in data array'.
      * Since 1.1 there is the optional parameter 'additional' with HTML code to 
-     * be inserted in the selected row. If given this replaces 
-     * [[additionalCode]] for that row only. In case you want to remove the 
-     * [[additionalCode]] only for that row set the 'additional' key to false.
+     * be inserted in the selected row. If given this replaces $additionalCode 
+     * for that row only. In case you want to remove the $additionalCode only 
+     * for that row set the 'additional' key to false.
      */
     public $data;
 
     /**
-     * @var boolean Wheter to copy the asset file even if it has been already 
+     * @var boolean Whether to copy the asset file even if it has been already 
      * published before, default false.
      * @see CAssetManager::publish()
      */
@@ -110,8 +110,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var integer Delay between last key pressed and dropdown list opened 
-     * in milliseconds, default 300. This option works only for 
-     * [[keyTrigger]] = true.
+     * in milliseconds, default 300. This option works only for $keyTrigger = true.
      * @since 1.2
      */
     public $delay = 300;
@@ -123,7 +122,7 @@ class AjaxDropDown extends CWidget
     public $disabledClass;
 
     /**
-     * @var boolean Wheter to add Bootstrap class 'dropup' to trigger dropdown 
+     * @var boolean Whether to add Bootstrap class 'dropup' to trigger dropdown 
      * menu above the button, default false.
      * This option works as intended only for bootstrap parameter set to true.
      */
@@ -186,7 +185,7 @@ class AjaxDropDown extends CWidget
     public $hiddenClass;
 
     /**
-     * @var boolean Wheter adding or removing results with JS should trigger 
+     * @var boolean Whether adding or removing results with JS should trigger 
      * onRemove and onSelect callbacks, default true.
      * @since 1.3
      */
@@ -209,10 +208,9 @@ class AjaxDropDown extends CWidget
     public $inputStyle;
 
     /**
-     * @var boolean Wheter pressing the key in filter field should trigger the 
+     * @var boolean Whether pressing the key in filter field should trigger the 
      * dropdown list to open, default true.
-     * This option works as intended only for [[bootstrap]] parameter set to 
-     * true.
+     * This option works as intended only for $bootstrap parameter set to true.
      * @since 1.2
      */
     public $keyTrigger = true;
@@ -231,7 +229,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var array Array of translated strings used in widgets, default array().
-     * @see [[defaultLocal]]
+     * @see $defaultLocal
      */
     public $local = array();
 
@@ -261,7 +259,7 @@ class AjaxDropDown extends CWidget
     public $markEnd;
 
     /**
-     * @var boolean Wheter to use minified version of js asset file, default 
+     * @var boolean Whether to use minified version of js asset file, default 
      * true.
      * @since 1.0.3
      */
@@ -279,7 +277,7 @@ class AjaxDropDown extends CWidget
     public $model;
 
     /**
-     * @var string Widget name. This must be set if [[model]] is not set.
+     * @var string Widget name. This must be set if $model is not set.
      */
     public $name;
 
@@ -326,7 +324,7 @@ class AjaxDropDown extends CWidget
      * @var string JavaScript expression to be called when a result is removed 
      * from the list.
      * Available js variables:
-     * id - ID of the removed result,
+     * id        - ID of the removed result,
      * selection - list of all selected results (after removing).
      * @since 1.2
      */
@@ -486,13 +484,13 @@ class AjaxDropDown extends CWidget
     public $selectedStyle;
 
     /**
-     * @var boolean Wheter to set widget in mode that allows only one selected 
+     * @var boolean Whether to set widget in mode that allows only one selected 
      * value or more, default false.
      */
     public $singleMode = false;
 
     /**
-     * @var boolean Wheter to display singleMode result underneath the widget 
+     * @var boolean Whether to display singleMode result underneath the widget 
      * or in the filter input field, default false.
      * @since 1.2
      */
@@ -572,7 +570,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * @var array Default English widget texts.
-     * {NUM} tag is automatically replaced with value of [[minQuery]] in the 
+     * {NUM} tag is automatically replaced with value of $minQuery in the 
      * 'minimumCharacters' element.
      */
     protected $defaultLocal = array(
@@ -613,8 +611,7 @@ class AjaxDropDown extends CWidget
     {
         if (!empty($this->buttonLabel) && is_string($this->buttonLabel)) {
             return $this->buttonLabel;
-        }
-        else {
+        } else {
             if ($this->bootstrap) {
                 return $this->bootstrapDefaults['buttonLabel'];
             }
@@ -633,17 +630,16 @@ class AjaxDropDown extends CWidget
 
     /**
      * Sets dropdown triggering button HTML options.
-     * @param boolean $hide Wheter this button should be hidden
+     * @param boolean $hide Whether this button should be hidden
      * @return array
      */
     protected function htmlOptionsButton($hide = false)
     {
-        $options = array(
-            'type'        => 'button',
-            'data-toggle' => 'dropdown',
-            'data-page'   => 1
-        );
-        return $this->htmlOptionsSet('button', $this->bootstrap, $options, $hide ? 'display:none;' : '');
+        return $this->htmlOptionsSet('button', $this->bootstrap, array(
+                'type'        => 'button',
+                'data-toggle' => 'dropdown',
+                'data-page'   => 1
+            ), $hide ? 'display:none;' : '');
     }
 
     /**
@@ -661,10 +657,10 @@ class AjaxDropDown extends CWidget
      */
     protected function htmlOptionsExtraButton()
     {
-        $options = !empty($this->extraButtonHtmlOptions) && is_array($this->extraButtonHtmlOptions) ? $this->extraButtonHtmlOptions : array();
         return array_merge(
-                array('type' => 'button'), $options
-        );
+                array('type' => 'button'), 
+                !empty($this->extraButtonHtmlOptions) && is_array($this->extraButtonHtmlOptions) ? $this->extraButtonHtmlOptions : array()
+            );
     }
 
     /**
@@ -688,11 +684,9 @@ class AjaxDropDown extends CWidget
                 $style .= $this->bootstrapDefaults['groupStyle'];
             }
         }
-
         if (!empty($this->groupClass) && is_string($this->groupClass)) {
             $class .= ' ' . $this->groupClass;
         }
-
         if (!empty($this->groupStyle) && is_string($this->groupStyle)) {
             $style .= ' ' . $this->groupStyle;
         }
@@ -707,7 +701,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * Sets input text field HTML options.
-     * @param boolean $disabled Wheter this field should be disabled
+     * @param boolean $disabled Whether this field should be disabled
      * @return array
      */
     protected function htmlOptionsInput($disabled = false)
@@ -744,15 +738,15 @@ class AjaxDropDown extends CWidget
 
     /**
      * Sets dropdown triggering button HTML options.
-     * @param boolean $show Wheter this button should be shown
+     * @param boolean $show Whether this button should be shown
      * @return array
      * @since 1.2
      */
     protected function htmlOptionsRemoveSingle($show = false)
     {
         return $this->htmlOptionsSet('removeSingle', $this->bootstrap, array(
-                    'type' => 'button',
-        ), $show ? 'display:inline-block;' : '');
+                'type' => 'button',
+            ), $show ? 'display:inline-block;' : '');
     }
 
     /**
@@ -776,17 +770,14 @@ class AjaxDropDown extends CWidget
         if (!empty($this->resultClass) && is_string($this->resultClass)) {
             $class .= ' ' . $this->resultClass;
         }
-
         if (!empty($this->resultStyle) && is_string($this->resultStyle)) {
             $style .= ' ' . $this->resultStyle;
         }
 
-        $return = array(
+        return array(
             'class' => $class ?: null,
             'style' => $style ?: null,
         );
-
-        return $return;
     }
 
     /**
@@ -810,7 +801,7 @@ class AjaxDropDown extends CWidget
     /**
      * Sets HTML options for chosen element.
      * @param string $name Name of the element
-     * @param boolean $bootstrap Wheter to add Bootstrap defaults
+     * @param boolean $bootstrap Whether to add Bootstrap defaults
      * @param array $additional Additional HTML options
      * @param string $appendStyle Additional CSS style
      * @return array
@@ -830,7 +821,6 @@ class AjaxDropDown extends CWidget
         if (!empty($this->{$name . 'Class'}) && is_string($this->{$name . 'Class'})) {
             $class .= ' ' . $this->{$name . 'Class'};
         }
-
         if (!empty($this->{$name . 'Style'}) && is_string($this->{$name . 'Style'})) {
             $style .= ' ' . $this->{$name . 'Style'};
         }
@@ -847,8 +837,7 @@ class AjaxDropDown extends CWidget
         if ($appendStyle != '') {
             if (!empty($return['style'])) {
                 $return['style'] .= (substr(trim($return['style']), -1) != ';' ? ';' : '') . $appendStyle;
-            }
-            else {
+            } else {
                 $return['style'] = $appendStyle;
             }
         }
@@ -862,9 +851,8 @@ class AjaxDropDown extends CWidget
      */
     public function init()
     {
-        $assets           = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets';
+        $assets = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets';
         $this->assetsPath = Yii::app()->getAssetManager()->publish($assets, false, 0, $this->debug);
-
         Yii::app()->getClientScript()->registerScriptFile($this->assetsPath . '/' . 'AjaxDropdown' . ($this->minified ? '.min' : '') . '.js');
         Yii::app()->clientScript->registerCoreScript('jquery');
     }
@@ -879,13 +867,11 @@ class AjaxDropDown extends CWidget
         $option = '';
         if (!empty($this->$name) && is_string($this->$name)) {
             $option = $this->$name;
-        }
-        else {
+        } else {
             if ($this->bootstrap) {
                 $option = !empty($this->bootstrapDefaults[$name]) ? $this->bootstrapDefaults[$name] : '';
             }
         }
-
         return $option;
     }
 
@@ -908,9 +894,8 @@ class AjaxDropDown extends CWidget
     {
         $value = 0;
         if (is_numeric($this->delay) && $this->delay > 0) {
-            $value = (int) $this->delay;
+            $value = (int)$this->delay;
         }
-
         return $value;
     }
 
@@ -920,13 +905,12 @@ class AjaxDropDown extends CWidget
      */
     protected function prepareOptionLocal()
     {
-        $local = !empty($this->defaultLocal) ? $this->defaultLocal : array();
-        if (!empty($this->local) && is_array($this->local)) {
-            foreach ($this->local as $key => $value) {
-                if (!empty($value) && is_string($value)) {
-                    $local[$key] = Yii::t($this->translateCategory, $value);
-                }
+        $local = $this->defaultLocal;
+        foreach ($local as $key => $value) {
+            if (!empty($this->local[$key]) && is_string($this->local[$key])) {
+                $value = $this->local[$key];
             }
+            $local[$key] = Yii::t($this->translateCategory, $value);
         }
 
         $shortlocal = array();
@@ -942,8 +926,7 @@ class AjaxDropDown extends CWidget
         foreach ($local as $key => $value) {
             if (isset($shortNames[$key])) {
                 $shortlocal[$shortNames[$key]] = $value;
-            }
-            else {
+            } else {
                 $shortlocal[$key] = $value;
             }
         }
@@ -969,8 +952,7 @@ class AjaxDropDown extends CWidget
         $progressBar = '';
         if (!empty($this->progressBar) && is_string($this->progressBar)) {
             $progressBar = strtr($this->progressBar, array('{LOADING}' => Yii::t($this->translateCategory, 'Loading')));
-        }
-        else {
+        } else {
             if ($this->bootstrap) {
                 $progressBar = !empty($this->bootstrapDefaults['progressBar']) ? strtr($this->bootstrapDefaults['progressBar'], array('{LOADING}' => Yii::t($this->translateCategory, 'Loading'))) : '';
             }
@@ -1037,7 +1019,7 @@ class AjaxDropDown extends CWidget
 
     /**
      * Sets source URL JS option.
-     * @see CHtml::normalizeUrl
+     * @see CHtml::normalizeUrl()
      * @return string
      */
     protected function prepareOptionUrl()
@@ -1055,16 +1037,15 @@ class AjaxDropDown extends CWidget
         if (!empty($this->removeSingleLabel) && is_string($this->removeSingleLabel)) {
             return $this->removeSingleLabel;
         }
-        else {
-            if ($this->bootstrap) {
-                return $this->bootstrapDefaults['removeSingleLabel'];
-            }
+        if ($this->bootstrap) {
+            return $this->bootstrapDefaults['removeSingleLabel'];
         }
         return !empty($this->defaults['removeSingleLabel']) ? $this->defaults['removeSingleLabel'] : '';
     }
 
     /**
      * Renders the preselected data values.
+     * @return array
      */
     protected function results()
     {
@@ -1077,8 +1058,7 @@ class AjaxDropDown extends CWidget
                         return [$this->singleResult($this->data[0], $this->singleMode)];
                     }
                 }
-            }
-            else {
+            } else {
                 foreach ($this->data as $data) {
                     $results[] = $this->singleResult($data, $this->singleMode);
                 }
@@ -1101,23 +1081,20 @@ class AjaxDropDown extends CWidget
     {
         if ($this->name !== null) {
             $name = $this->name;
-        }
-        elseif ($this->hasModel()) {
+        } elseif ($this->hasModel()) {
             $name = CHtml::activeName($this->model, $this->attribute);
-        }
-        else {
+        } else {
             throw new CException(Yii::t('zii', '{class} must specify "model" and "attribute" or "name" property values.', array('{class}' => get_class($this))));
         }
-
         if (($id = $this->getId(false)) === null) {
             $id = CHtml::getIdByName($name);
         }
-
         return array($name, $id);
     }
 
     /**
      * Renders the widget and prepares all options required by the JS.
+     * @return string
      */
     public function run()
     {
@@ -1162,8 +1139,9 @@ class AjaxDropDown extends CWidget
     /**
      * Renders single preselected value result.
      * @param array $data Preselected value data array
-     * @param boolean $singleMode Wheter to render hidden output field as 
+     * @param boolean $singleMode Whether to render hidden output field as 
      * single one or as part of tabular data collection
+     * @return array
      */
     protected function singleResult($data = array(), $singleMode = false)
     {
@@ -1181,19 +1159,15 @@ class AjaxDropDown extends CWidget
             if (empty($result['additional']) || !is_string($result['additional'])) {
                 $result['additional'] = '';
             }
-        }
-        else {
+        } else {
             $result['additional'] = '';
         }
-
         if (!empty($this->removeLabel) && is_string($this->removeLabel)) {
             $result['removeLabel'] = $this->removeLabel;
-        }
-        else {
+        } else {
             if ($this->bootstrap) {
                 $result['removeLabel'] = $this->bootstrapDefaults['removeLabel'];
-            }
-            else {
+            } else {
                 $result['removeLabel'] = !empty($this->defaults['removeLabel']) ? $this->defaults['removeLabel'] : '';
             }
         }

@@ -1,21 +1,21 @@
 <?php
+
 /**
  * @author Paweł Bizley Brzozowski
- * @version 1.3.1
+ * @version 1.3.2
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  */
-?>
 
-<?= CHtml::openTag('div', $htmlOptionsMain) . "\n"; ?>
-    <?= CHtml::openTag('div', $htmlOptionsGroup) . "\n"; ?>
-        <?= CHtml::textField(
+echo CHtml::openTag('div', $htmlOptionsMain) . "\n";
+    echo CHtml::openTag('div', $htmlOptionsGroup) . "\n";
+        echo CHtml::textField(
                 !empty($defaults['inputName']) ? $defaults['inputName'] : '', 
                 $singleMode ? (!empty($data[0]['value']) ? str_replace('"', '', strip_tags($data[0]['value'])) : '') : '', 
                 $htmlOptionsInput
-            ) . "\n"; ?>
-<?php if ($singleMode): ?>
-<?php if (!empty($model)): ?>
-        <?= CHtml::activeHiddenField(
+            ) . "\n";
+if ($singleMode):
+if (!empty($model)):
+        echo CHtml::activeHiddenField(
                 $model, 
                 $attribute, 
                 array(
@@ -23,31 +23,30 @@
                     'id'    => false, 
                     'class' => 'singleResult'
                 )
-            ) . "\n"; ?>
-<?php else: ?>
-        <?= CHtml::hiddenField(
+            ) . "\n";
+else:
+        echo CHtml::hiddenField(
                 $name, 
                 !empty($data[0]['id']) ? $data[0]['id'] : '', 
                 array(
                     'id'    => false, 
                     'class' => 'singleResult'
                 )
-            ) . "\n"; ?>
-<?php endif; ?>
-<?php endif; ?>
-        <?= CHtml::openTag('div', $htmlOptionsButtons) . "\n"; ?>
-<?php if (!empty($extraButtonLabel) || !empty($extraButtonOptions)): ?>
-            <?= CHtml::htmlButton(is_string($extraButtonLabel) ? $extraButtonLabel : '', $htmlOptionsExtraButton) . "\n"; ?>
-<?php endif; ?>
-            <?= CHtml::htmlButton($buttonLabel, $htmlOptionsButton) . "\n"; ?>
-            <?= CHtml::htmlButton($removeSingleLabel, $htmlOptionsRemoveSingle) . "\n"; ?>
-            <?= CHtml::tag('ul', $htmlOptionsResults) . "\n"; ?>
-        <?= CHtml::closeTag('div') . "\n"; ?>
-    <?= CHtml::closeTag('div') . "\n"; ?>
-    <?= CHtml::openTag('ul', $htmlOptionsSelected) . "\n"; ?>
-<?php foreach ($results as $result): ?>
-        <?= $this->render('result', $result); ?>
-<?php endforeach; ?>
-    <?= CHtml::closeTag('ul') . "\n"; ?>
-<?= CHtml::closeTag('div') . "\n"; ?>
-
+            ) . "\n";
+endif;
+endif;
+        echo CHtml::openTag('div', $htmlOptionsButtons) . "\n";
+if (!empty($extraButtonLabel) || !empty($extraButtonOptions)):
+            echo CHtml::htmlButton(is_string($extraButtonLabel) ? $extraButtonLabel : '', $htmlOptionsExtraButton) . "\n";
+endif;
+            echo CHtml::htmlButton($buttonLabel, $htmlOptionsButton) . "\n";
+            echo CHtml::htmlButton($removeSingleLabel, $htmlOptionsRemoveSingle) . "\n";
+            echo CHtml::tag('ul', $htmlOptionsResults) . "\n";
+        echo CHtml::closeTag('div') . "\n";
+    echo CHtml::closeTag('div') . "\n";
+    echo CHtml::openTag('ul', $htmlOptionsSelected) . "\n";
+foreach ($results as $result):
+        echo $this->render('result', $result);
+endforeach;
+    echo CHtml::closeTag('ul') . "\n";
+echo CHtml::closeTag('div') . "\n";
